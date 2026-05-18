@@ -1,0 +1,22 @@
+{
+  "name": "oleg-skills",
+  "owner": {
+    "name": "Oleg Parshikov",
+    "email": "olegpars@gmail.com"
+  },
+  "metadata": {
+    "description": "Public Claude Code skills by @olegpars — generic, shareable versions",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "oleg-skills",
+      "description": "Public Claude Code skills collection by Oleg Parshikov",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/dreamina-delogo"
+      ]
+    }
+  ]
+}
