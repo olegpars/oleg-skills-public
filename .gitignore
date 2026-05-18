@@ -1,0 +1,12 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# Build / dev artifacts
+**/node_modules/
+**/dist/
+**/__pycache__/
+*.pyc
