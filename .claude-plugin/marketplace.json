@@ -5,18 +5,25 @@
     "email": "olegpars@gmail.com"
   },
   "metadata": {
-    "description": "Public Claude Code skills by @olegpars — generic, shareable versions",
+    "description": "Public Claude Code skills by @olegpars — generic, shareable. Hub repo; each skill lives in its own companion repo (homebrew-core style).",
     "version": "0.1.0"
   },
   "plugins": [
     {
-      "name": "oleg-skills",
-      "description": "Public Claude Code skills collection by Oleg Parshikov",
-      "source": "./",
-      "strict": false,
-      "skills": [
-        "./skills/dreamina-delogo"
-      ]
+      "name": "dreamina-delogo",
+      "description": "Remove fixed-position AI badge watermark from Dreamina / Seedance MP4/MOV videos using pure FFmpeg. Local, no cloud, no upload.",
+      "author": {
+        "name": "Oleg Parshikov",
+        "email": "olegpars@gmail.com"
+      },
+      "category": "media",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/olegpars/dreamina-delogo.git",
+        "path": ".claude/skills/dreamina-delogo",
+        "ref": "main"
+      },
+      "homepage": "https://github.com/olegpars/dreamina-delogo"
     }
   ]
 }

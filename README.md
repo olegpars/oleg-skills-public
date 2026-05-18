@@ -1,100 +1,57 @@
 # oleg-skills
 
-Public Claude Code skills by [@olegpars](https://github.com/olegpars). Generic, shareable versions.
+Catalog hub for [@olegpars](https://github.com/olegpars)' public Claude Code skills.
 
-| Skill | What it does | Companion tool |
+This repo **does not contain skill code itself**. Each skill lives in its own companion repo (the homebrew-core pattern: this is the index, the upstream repo is the source of truth). The `.claude-plugin/marketplace.json` here points Claude Code at the skill sources via `git-subdir` references.
+
+## Skill catalog
+
+| Skill | What it does | Source repo |
 |---|---|---|
-| [`dreamina-delogo`](skills/dreamina-delogo/) | Removes the fixed-position AI badge watermark from Dreamina / Seedance MP4 / MOV videos. Pure FFmpeg, runs locally, ~30s per 15s clip. | [olegpars/dreamina-delogo](https://github.com/olegpars/dreamina-delogo) (scripts + before/after examples) |
+| `dreamina-delogo` | Removes the fixed-position AI badge watermark from Dreamina / Seedance MP4 / MOV videos. Pure FFmpeg, runs locally, ~30s per 15s clip. | [olegpars/dreamina-delogo](https://github.com/olegpars/dreamina-delogo) |
 
----
-
-## dreamina-delogo
-
-Dreamina (ByteDance Seedance) stamps a small **AI** badge in the top-left corner of every generated video. If you're cutting a Reel/Short and want it clean, you need it gone. Online removers want you to upload your footage to their server. This skill does it on your laptop in ~30 seconds per 15s clip — pure FFmpeg, no AI, no cloud.
-
-**See before / after:** [olegpars/dreamina-delogo#examples](https://github.com/olegpars/dreamina-delogo#examples) (two pairs + side-by-side comparison)
-
-### Quick install (the skill + the script)
-
-```bash
-# 1. Clone the script repo (the actual FFmpeg work)
-git clone https://github.com/olegpars/dreamina-delogo.git
-
-# 2. Clone this skills repo
-git clone https://github.com/olegpars/oleg-skills-public.git
-```
-
-Then either open `oleg-skills-public` as the cwd of a Claude Code session (auto-trigger), or junction-mount the skill globally — see [global install](#global-install) below.
-
-### Run it directly (no Claude Code needed)
-
-```bash
-cd dreamina-delogo
-bash delogo.sh /path/to/video.mp4              # single file
-bash delogo.sh /path/to/folder                  # whole folder
-```
-PowerShell: `./delogo.ps1 <file-or-folder>`. Full docs and tunable parameters: [olegpars/dreamina-delogo](https://github.com/olegpars/dreamina-delogo).
-
----
-
-## Global install
-
-To make these skills trigger from **any** Claude Code session (not only when this repo is cwd):
-
-### Windows (NTFS junction, no admin required)
-
-```powershell
-git clone https://github.com/olegpars/oleg-skills-public.git D:\path\to\oleg-skills-public
-
-# Mount one skill into ~/.claude/skills/:
-New-Item -ItemType Junction `
-  -Path "$env:USERPROFILE\.claude\skills\dreamina-delogo" `
-  -Target "D:\path\to\oleg-skills-public\skills\dreamina-delogo"
-```
-
-Repeat the `New-Item` line for each skill you want active.
-
-### Linux / macOS
-
-```bash
-git clone https://github.com/olegpars/oleg-skills-public.git ~/oleg-skills-public
-ln -s ~/oleg-skills-public/skills/dreamina-delogo ~/.claude/skills/dreamina-delogo
-```
-
-### Plugin marketplace (when Anthropic's `/plugin install` is available)
-
-This repo includes a [`.claude-plugin/marketplace.json`](.claude-plugin/marketplace.json) manifest, so you can install via:
+## Install all skills via Claude Code marketplace
 
 ```
 /plugin marketplace add olegpars/oleg-skills-public
-/plugin install oleg-skills@oleg-skills-public
+/plugin install dreamina-delogo@oleg-skills
 ```
 
----
+This pulls each skill from its source repo into your `~/.claude/skills/` automatically.
 
-## Structure & rule
+## Install one skill directly (without marketplace)
 
+Each skill's source repo is fully self-contained — clone it directly and either open it as cwd in Claude Code (auto-trigger), or junction-mount it globally:
+
+```powershell
+# Windows
+git clone https://github.com/olegpars/dreamina-delogo.git D:\path\to\dreamina-delogo
+
+New-Item -ItemType Junction `
+  -Path "$env:USERPROFILE\.claude\skills\dreamina-delogo" `
+  -Target "D:\path\to\dreamina-delogo\.claude\skills\dreamina-delogo"
 ```
-olegpars/oleg-skills-public   ← this repo: generic SKILL.md files, community-facing
-olegpars/<skill-name>         ← optional companion repo: scripts/binaries (e.g. dreamina-delogo)
-olegpars/oleg-skills-private  ← Oleg's personal/local copies (private, not relevant to you)
+
+```bash
+# Linux / macOS
+git clone https://github.com/olegpars/dreamina-delogo.git ~/dreamina-delogo
+ln -s ~/dreamina-delogo/.claude/skills/dreamina-delogo ~/.claude/skills/dreamina-delogo
 ```
 
-A skill that needs no scripts (pure prompt instructions) lives only here. A skill that needs binaries (FFmpeg pipelines, Python scripts, etc.) gets a **companion tool repo** — that repo can be used standalone, and the SKILL.md here wraps it for Claude Code with clone instructions.
+## Why a separate hub repo
 
-## Adding a new skill (PRs welcome)
+The skill's primary repo (`olegpars/dreamina-delogo`) is a **self-contained tool**: it has FFmpeg scripts, before/after examples, README, and bundles a `SKILL.md` so cloning it as cwd in Claude Code is enough. The Claude skill is one interface to that tool; the CLI scripts are another.
 
-1. Create folder `skills/<skill-name>/SKILL.md` with YAML frontmatter:
-   ```yaml
-   ---
-   name: skill-name
-   description: One-line trigger description (when Claude should use this skill).
-   ---
-   ```
-2. Body: what the skill does, when to use it, when NOT to use it, quick reference, common mistakes.
-3. Add an entry to the catalog table at the top of this README.
-4. Append the skill path to `.claude-plugin/marketplace.json` under `plugins[0].skills`.
+This `oleg-skills-public` repo plays the **registry / catalog** role — analogous to homebrew-core or anthropics/claude-plugins-official. It does not own skill content; it points at where skills actually live.
 
-## License
+## Adding a new skill
 
-MIT — see [LICENSE](LICENSE) if/when added. Until then, treat as MIT-equivalent: fork, copy, adapt freely.
+1. Create or pick the skill's source repo (e.g. `olegpars/new-skill`) and ensure its `SKILL.md` lives at a known path (convention: `.claude/skills/<name>/SKILL.md`).
+2. Add a row to the **Skill catalog** table above.
+3. Append a `plugins[]` entry to [`.claude-plugin/marketplace.json`](.claude-plugin/marketplace.json) with the `git-subdir` source pointing at that path in the source repo.
+4. Commit and push. The new skill becomes installable from this hub.
+
+## Related
+
+- [olegpars/oleg-skills-private](https://github.com/olegpars/oleg-skills-private) — private repo of Oleg's personal Claude Code skills with machine-specific paths. Not relevant to community use.
+- [olegpars/dreamina-delogo](https://github.com/olegpars/dreamina-delogo) — first skill source repo, FFmpeg watermark remover.
