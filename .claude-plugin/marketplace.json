@@ -24,6 +24,38 @@
         "ref": "main"
       },
       "homepage": "https://github.com/olegpars/dreamina-delogo"
+    },
+    {
+      "name": "kopatel",
+      "description": "Autonomous multi-hour deep-research pipeline: scout council -> wave loop -> consolidation -> static knowledge-base site, with A/B/C/D confidence tiers on every claim",
+      "author": {
+        "name": "Oleg Parshentsev",
+        "email": "olegpars@gmail.com"
+      },
+      "category": "research",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/olegpars/kopatel.git",
+        "path": ".claude/skills/kopatel",
+        "ref": "main"
+      },
+      "homepage": "https://github.com/olegpars/kopatel"
+    },
+    {
+      "name": "brigada",
+      "description": "One-shot multi-agent expert council for hard decisions: role personas, a verifier, an adversarial critic, a gap-fill round, and synthesis into a single document",
+      "author": {
+        "name": "Oleg Parshentsev",
+        "email": "olegpars@gmail.com"
+      },
+      "category": "productivity",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/olegpars/brigada.git",
+        "path": ".claude/skills/brigada",
+        "ref": "main"
+      },
+      "homepage": "https://github.com/olegpars/brigada"
     }
   ]
 }
