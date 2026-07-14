@@ -1,7 +1,7 @@
 {
   "name": "oleg-skills",
   "owner": {
-    "name": "Oleg Parshikov",
+    "name": "Oleg Parshentsev",
     "email": "olegpars@gmail.com"
   },
   "metadata": {
@@ -13,7 +13,7 @@
       "name": "dreamina-delogo",
       "description": "Remove fixed-position AI badge watermark from Dreamina / Seedance MP4/MOV videos using pure FFmpeg. Local, no cloud, no upload.",
       "author": {
-        "name": "Oleg Parshikov",
+        "name": "Oleg Parshentsev",
         "email": "olegpars@gmail.com"
       },
       "category": "media",
